@@ -1,0 +1,19 @@
+{
+  "units": "kg",
+  "source": "Transport Canada AC 700-022, Appendix A",
+  "summer": {
+    "M": 93.4,
+    "F": 78.1,
+    "X": 93.4,
+    "C": 34.0,
+    "I": 13.6
+  },
+  "winter": {
+    "M": 96.2,
+    "F": 80.7,
+    "X": 96.2,
+    "C": 34.0,
+    "I": 13.6
+  },
+  "infant_rule": "Add infant weight only where infants exceed 10% of the number of adults"
+}

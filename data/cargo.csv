@@ -1,0 +1,12 @@
+cargo_id,description,weight_kg,volume_m3,priority,category,dg_class,current_hold
+C01,Canada Post mail,400,2.0,1,mail,,FWD
+C02,Medical supplies (blood products),150,0.7,1,medical,,FWD
+C03,Fresh salmon,300,1.4,2,perishable,,FWD
+C04,Printed matter,200,1.0,3,general,,FWD
+C05,Auto parts,698.1,2.4,3,general,,FWD
+C06,Lithium batteries,80,0.4,2,dg,9,AFT
+C07,E-commerce pallet,540,3.0,5,general,,AFT
+C08,Furniture parts,420,2.2,4,general,,
+C09,Courier documents,60,0.3,2,mail,,
+C10,Live lobsters,120,0.6,2,perishable,,
+C11,Wet-cell batteries (corrosive),60,0.3,3,dg,8,FWD

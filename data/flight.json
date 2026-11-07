@@ -1,0 +1,19 @@
+{
+  "flight_no": "AC123",
+  "origin": "YYZ",
+  "destination": "YVR",
+  "date": "2026-11-07",
+  "scheduled_departure": "19:30",
+  "loading_cutoff": "19:15",
+  "season": "winter",
+  "old_aircraft": "A321ceo",
+  "new_aircraft": "A320ceo",
+  "dcs": {
+    "pax_boarding": 162,
+    "bags_checked": 205
+  },
+  "options": {
+    "lightning_mode": false,
+    "safety_buffer_pct": 0
+  }
+}
