@@ -7,7 +7,7 @@ This folder is a runnable, self-contained copy of the team modules in `../code/`
 From the project root:
 
 ```bash
-python -m pip install -r "combined code/requirements.txt"
+python -m pip install -r "combined_code/requirements.txt"
 cd "combined code"
 python pipeline.py a320_winter_swap
 python pipeline.py a220_winter_swap
