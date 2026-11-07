@@ -40,6 +40,8 @@ for ac in (old, new):
 
 print("\n== Counts & integrity")
 check(len(pax) == old["rows"] * len(old["seats_per_row"]), f"{len(pax)} passengers = full {old['type']}")
+dcs_list = list(csv.DictReader(open(D / "dcs_removed.csv", encoding="utf-8")))
+check({r["pax_id"] for r in dcs_list} == removed, f"dcs_removed.csv ({len(dcs_list)}) matches removed_by_dcs flags")
 check(len(removed) == 30 and all(int(pax_by_id[i]["row"]) >= 28 for i in removed), f"{len(removed)} removed, all in rows 28-32")
 check(len(flying) == new["rows"] * len(new["seats_per_row"]), f"{len(flying)} flying = full {new['type']}")
 check(all(b["owner_pax_id"] in pax_by_id for b in bags), f"all {len(bags)} bags have a valid owner")

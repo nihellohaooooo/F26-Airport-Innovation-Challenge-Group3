@@ -310,6 +310,12 @@ write_json("flight.json", flight)
 write_json("scenarios.json", scenarios)
 write_csv("passengers.csv", passengers,
           ["pax_id", "name", "seat", "row", "category", "removed_by_dcs", "checkin_status", "group_id"])
+# DCS message: the list of passengers removed from the flight (input to Swap Mapper / Bag Offload Tracker)
+dcs_removed = [
+    {**p, "reason": f"Row {p['row']} does not exist on the A320ceo", "sent_at": "18:41"}
+    for p in passengers if p["removed_by_dcs"] == "true"
+]
+write_csv("dcs_removed.csv", dcs_removed, ["pax_id", "name", "seat", "row", "category", "reason", "sent_at"])
 write_csv("bags.csv", bags,
           ["tag", "owner_pax_id", "weight_kg", "volume_m3", "location", "stack_pos", "state",
            "is_connecting", "inbound_flight", "eta"])
