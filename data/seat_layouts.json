@@ -1,0 +1,39 @@
+
+{
+  "A321ceo": {
+    "description": "Demo seating layout for A321ceo",
+    "default_layout": {
+      "seat_blocks": [
+        ["A", "B", "C"],
+        ["D", "E", "F"]
+      ]
+    },
+    "cabin_sections": [
+      {
+        "cabin": "economy",
+        "row_from": 1,
+        "row_to": 32
+      }
+    ],
+    "blocked_seats": [],
+    "exit_rows": []
+  },
+  "A320ceo": {
+    "description": "Demo seating layout for A320ceo",
+    "default_layout": {
+      "seat_blocks": [
+        ["A", "B", "C"],
+        ["D", "E", "F"]
+      ]
+    },
+    "cabin_sections": [
+      {
+        "cabin": "economy",
+        "row_from": 1,
+        "row_to": 27
+      }
+    ],
+    "blocked_seats": [],
+    "exit_rows": []
+  }
+}
