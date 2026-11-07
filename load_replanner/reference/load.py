@@ -76,7 +76,8 @@ def solve_cargo_loading_plan(cargo_database, aircraft_params, unassigned_penalty
 
     total_weight = oew + total_cargo_weight
 
-    oew_moment = oew + oew_arm
+    #moment = weight * arm
+    oew_moment = oew * oew_arm
     cargo_moment = pulp.lpSum(z[i,j] * cargo_database[i]['weight'] * bays[j]['arm'] for i in range(num_items) for j in bay_ids)
     total_moment = oew_moment + cargo_moment
 
