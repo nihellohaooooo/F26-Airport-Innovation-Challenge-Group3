@@ -58,7 +58,9 @@ def build_model(bags, cargo, aircraft, fixed_weight, fixed_moment):
     items = [dict(b, kind="bag", id=b["tag"]) for b in bags] + [dict(c, kind="cargo") for c in cargo]
 
     def allowed(item, h):
-        return not (item.get("category") == "dangerous_goods" and not holds[h]["dg_allowed"])
+        """Dangerous goods rule: a DG class listed as forbidden for this hold may not go there."""
+        dg = item.get("dg_class")
+        return not (dg and dg in holds[h].get("dg_forbidden", []))
 
     prob = pulp.LpProblem("load_replan", pulp.LpMinimize)
 
