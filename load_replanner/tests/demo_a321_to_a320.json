@@ -1,0 +1,977 @@
+{
+  "flight": "AC100 YYZ, A321 replaced by A320",
+  "season": "winter",
+  "units": "kg, m3, metres from the nose",
+  "aircraft": {
+    "type": "A320",
+    "note": "Illustrative values shaped like an A320. Not certified data.",
+    "oew_kg": 42200,
+    "oew_arm_m": 17.3,
+    "mzfw_kg": 62500,
+    "cg_fwd_limit_m": 16.4,
+    "cg_aft_limit_m": 18.0,
+    "cg_target_m": 17.4,
+    "holds": {
+      "FWD": {
+        "arm_m": 9.5,
+        "max_kg": 3402,
+        "max_m3": 13.3,
+        "dg_allowed": true
+      },
+      "AFT": {
+        "arm_m": 23.5,
+        "max_kg": 4500,
+        "max_m3": 18.0,
+        "dg_allowed": true
+      },
+      "BULK": {
+        "arm_m": 27.0,
+        "max_kg": 1497,
+        "max_m3": 5.9,
+        "dg_allowed": false
+      }
+    }
+  },
+  "cabin_zones": [
+    {
+      "zone": "A",
+      "rows": "1-9",
+      "arm_m": 11.0,
+      "pax": 52,
+      "kg_summer": 4576,
+      "kg_winter": 4784
+    },
+    {
+      "zone": "B",
+      "rows": "10-18",
+      "arm_m": 16.6,
+      "pax": 54,
+      "kg_summer": 4752,
+      "kg_winter": 4968
+    },
+    {
+      "zone": "C",
+      "rows": "19-27",
+      "arm_m": 22.2,
+      "pax": 50,
+      "kg_summer": 4400,
+      "kg_winter": 4600
+    }
+  ],
+  "cabin_zones_note": "Placeholder 88 kg summer / 92 kg winter per passenger until Swap Mapper provides Transport Canada standard weights.",
+  "bags": [
+    {
+      "tag": "AC100000",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100001",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100002",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100003",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100004",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100005",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100006",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100007",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100008",
+      "kg": 21,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100009",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100010",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100011",
+      "kg": 22,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100012",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100013",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100014",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100015",
+      "kg": 22,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100016",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100017",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100018",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100019",
+      "kg": 15,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100020",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100021",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100022",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100023",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100024",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100025",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100026",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100027",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100028",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100029",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100030",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100031",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100032",
+      "kg": 22,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100033",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100034",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100035",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100036",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100037",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100038",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100039",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100040",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100041",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100042",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100043",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100044",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100045",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100046",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100047",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100048",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100049",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100050",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100051",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100052",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100053",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100054",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100055",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100056",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100057",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100058",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100059",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100060",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100061",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100062",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100063",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100064",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100065",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100066",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100067",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100068",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100069",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100070",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100071",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100072",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100073",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100074",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100075",
+      "kg": 21,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100076",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100077",
+      "kg": 21,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100078",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100079",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100080",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100081",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100082",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100083",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100084",
+      "kg": 21,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100085",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100086",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100087",
+      "kg": 22,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100088",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100089",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100090",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100091",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100092",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100093",
+      "kg": 21,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100094",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100095",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100096",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100097",
+      "kg": 22,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100098",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100099",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": "FWD"
+    },
+    {
+      "tag": "AC100100",
+      "kg": 15,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100101",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100102",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100103",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100104",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100105",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100106",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100107",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100108",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100109",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100110",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100111",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100112",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100113",
+      "kg": 21,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100114",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100115",
+      "kg": 22,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100116",
+      "kg": 15,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100117",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100118",
+      "kg": 26,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100119",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100120",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100121",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100122",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100123",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100124",
+      "kg": 16,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100125",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100126",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100127",
+      "kg": 19,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100128",
+      "kg": 28,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100129",
+      "kg": 25,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100130",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100131",
+      "kg": 24,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100132",
+      "kg": 18,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100133",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100134",
+      "kg": 20,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100135",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100136",
+      "kg": 17,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100137",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100138",
+      "kg": 27,
+      "m3": 0.07,
+      "current_hold": null
+    },
+    {
+      "tag": "AC100139",
+      "kg": 23,
+      "m3": 0.07,
+      "current_hold": null
+    }
+  ],
+  "cargo": [
+    {
+      "id": "CRG-AUTO",
+      "desc": "Auto parts",
+      "kg": 900,
+      "m3": 2.0,
+      "priority": 3,
+      "category": "general",
+      "current_hold": "FWD"
+    },
+    {
+      "id": "CRG-MAIL",
+      "desc": "Canada Post mail",
+      "kg": 300,
+      "m3": 1.2,
+      "priority": 2,
+      "category": "mail",
+      "current_hold": "FWD"
+    },
+    {
+      "id": "CRG-LI",
+      "desc": "Lithium batteries (declared)",
+      "kg": 120,
+      "m3": 0.4,
+      "priority": 3,
+      "category": "dangerous_goods",
+      "current_hold": "FWD"
+    },
+    {
+      "id": "CRG-FISH",
+      "desc": "Fresh seafood",
+      "kg": 400,
+      "m3": 1.5,
+      "priority": 2,
+      "category": "perishable",
+      "current_hold": "FWD"
+    },
+    {
+      "id": "CRG-MED",
+      "desc": "Medical supplies",
+      "kg": 80,
+      "m3": 0.3,
+      "priority": 1,
+      "category": "medical",
+      "current_hold": "AFT"
+    },
+    {
+      "id": "CRG-ECOM",
+      "desc": "E-commerce pallet",
+      "kg": 350,
+      "m3": 2.5,
+      "priority": 5,
+      "category": "general",
+      "current_hold": "AFT"
+    },
+    {
+      "id": "CRG-GEN",
+      "desc": "General freight",
+      "kg": 600,
+      "m3": 2.2,
+      "priority": 4,
+      "category": "general",
+      "current_hold": "AFT"
+    }
+  ],
+  "options": {
+    "lightning": false,
+    "buffer_pct": 0
+  },
+  "dcs_counts": {
+    "passengers_boarding": 156,
+    "bags_checked_flying": 140
+  }
+}
