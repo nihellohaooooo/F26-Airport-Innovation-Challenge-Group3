@@ -1,0 +1,254 @@
+{
+  "A321ceo": {
+    "type": "A321ceo",
+    "data_notes": "REAL: specs block + max zero fuel weight 73.8 t (Airbus A321ceo page); hold volumes from A320/A321 ground ops manual (FWD = cmpt 1+2, AFT = cmpt 3+4); hold weight total 11,548 kg. ESTIMATE: FWD/AFT weight split. ILLUSTRATIVE: dry operating weight, arms, CG limits (real ones are %MAC / index in the airline load manual).",
+    "specs": {
+      "max_seats": 220,
+      "typical_seats": "170-210",
+      "ld3_45w_underfloor": 10,
+      "max_ramp_weight_kg": 93900,
+      "max_takeoff_weight_kg": 93500,
+      "max_landing_weight_kg": 77800,
+      "max_fuel_l": 30030,
+      "overall_length_m": 44.51,
+      "cabin_length_m": 34.44,
+      "wheelbase_m": 16.9
+    },
+    "rows": 32,
+    "seats_per_row": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "dry_operating_weight_kg": 48500,
+    "dry_operating_arm_m": 19.6,
+    "max_zero_fuel_weight_kg": 73800,
+    "cg_forward_limit_m": 18.4,
+    "cg_aft_limit_m": 20.6,
+    "cg_target_m": 19.9,
+    "cabin_zones": [
+      {
+        "zone": "OA",
+        "row_from": 1,
+        "row_to": 10,
+        "seats": 60,
+        "arm_m": 10.6,
+        "max_weight_kg": 6000
+      },
+      {
+        "zone": "OB",
+        "row_from": 11,
+        "row_to": 21,
+        "seats": 66,
+        "arm_m": 18.9,
+        "max_weight_kg": 6600
+      },
+      {
+        "zone": "OC",
+        "row_from": 22,
+        "row_to": 32,
+        "seats": 66,
+        "arm_m": 27.5,
+        "max_weight_kg": 6600
+      }
+    ],
+    "holds": [
+      {
+        "hold": "FWD",
+        "arm_m": 12.0,
+        "max_weight_kg": 5515,
+        "max_volume_m3": 22.81,
+        "dg_forbidden_classes": []
+      },
+      {
+        "hold": "AFT",
+        "arm_m": 28.0,
+        "max_weight_kg": 4536,
+        "max_volume_m3": 17.93,
+        "dg_forbidden_classes": [
+          "8",
+          "1.4S"
+        ]
+      },
+      {
+        "hold": "BULK",
+        "arm_m": 32.0,
+        "max_weight_kg": 1497,
+        "max_volume_m3": 5.88,
+        "dg_forbidden_classes": [
+          "8",
+          "1.4S"
+        ]
+      }
+    ]
+  },
+  "A320ceo": {
+    "type": "A320ceo",
+    "data_notes": "REAL: specs block + max zero fuel weight 62.5 t (Airbus A320ceo page); hold weights 3,402 / 4,536 / 1,497 kg and volumes 13.2 / 18.2 / 5.88 m3 (A320-214 ground ops manual). ILLUSTRATIVE: dry operating weight (tuned for the demo), arms, CG limits.",
+    "specs": {
+      "max_seats": 180,
+      "typical_seats": "140-170 (2-class)",
+      "ld3_45w_underfloor": 7,
+      "max_ramp_weight_kg": 78400,
+      "max_takeoff_weight_kg": 78000,
+      "max_landing_weight_kg": 66000,
+      "max_fuel_l": 27200,
+      "overall_length_m": 37.57,
+      "cabin_length_m": 27.51,
+      "wheelbase_m": 12.64
+    },
+    "rows": 27,
+    "seats_per_row": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "dry_operating_weight_kg": 41820,
+    "dry_operating_arm_m": 17.2,
+    "max_zero_fuel_weight_kg": 62500,
+    "cg_forward_limit_m": 16.4,
+    "cg_aft_limit_m": 18.2,
+    "cg_target_m": 17.6,
+    "cabin_zones": [
+      {
+        "zone": "OA",
+        "row_from": 1,
+        "row_to": 9,
+        "seats": 54,
+        "arm_m": 10.2,
+        "max_weight_kg": 5400
+      },
+      {
+        "zone": "OB",
+        "row_from": 10,
+        "row_to": 18,
+        "seats": 54,
+        "arm_m": 17.3,
+        "max_weight_kg": 5400
+      },
+      {
+        "zone": "OC",
+        "row_from": 19,
+        "row_to": 27,
+        "seats": 54,
+        "arm_m": 24.4,
+        "max_weight_kg": 5400
+      }
+    ],
+    "holds": [
+      {
+        "hold": "FWD",
+        "arm_m": 11.5,
+        "max_weight_kg": 3402,
+        "max_volume_m3": 13.2,
+        "dg_forbidden_classes": []
+      },
+      {
+        "hold": "AFT",
+        "arm_m": 23.5,
+        "max_weight_kg": 4536,
+        "max_volume_m3": 18.2,
+        "dg_forbidden_classes": [
+          "8",
+          "1.4S"
+        ]
+      },
+      {
+        "hold": "BULK",
+        "arm_m": 26.5,
+        "max_weight_kg": 1497,
+        "max_volume_m3": 5.88,
+        "dg_forbidden_classes": [
+          "8",
+          "1.4S"
+        ]
+      }
+    ]
+  },
+  "A220-300": {
+    "type": "A220-300",
+    "data_notes": "Public A220-300 figures supplied by the user are stored in specs. The two usable hold volumes and compartment load limits are from Airbus A220-300 Aircraft Characteristics Publication (FWD 12.65 m3 / 2446 kg; AFT 14.81 m3 / 2606 kg). The public cargo-water-volume figure (31.1 m3) uses a different capacity definition. OEW 37149 kg is Airbus generic planning data; dry operating arm, cabin zone arms/limits, and CG envelope/target are illustrative only. This profile is for a demonstration and is not an approved load-control profile.",
+    "specs": {
+      "max_seats": 160,
+      "typical_seats": "120-150 (2-class)",
+      "max_ramp_weight_kg": 71200,
+      "max_takeoff_weight_kg": 70900,
+      "max_landing_weight_kg": 61000,
+      "max_zero_fuel_weight_kg": 58000,
+      "max_fuel_l": 21508,
+      "cargo_water_volume_m3": 31.1,
+      "range_km": 6300,
+      "mmo": "M0.82",
+      "overall_length_m": 38.7,
+      "cabin_length_m": 27.5,
+      "fuselage_max_diameter_m": 3.5,
+      "max_cabin_width_m": 3.28,
+      "wingspan_m": 35.1,
+      "height_m": 11.5
+    },
+    "rows": 32,
+    "seats_per_row": [
+      "A",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "seat_layout": "2-3",
+    "validate_seat_letters": true,
+    "dry_operating_weight_kg": 37149,
+    "dry_operating_arm_m": 19.35,
+    "max_zero_fuel_weight_kg": 58000,
+    "cg_forward_limit_m": 16.8,
+    "cg_aft_limit_m": 21.0,
+    "cg_target_m": 19.0,
+    "cabin_zones": [
+      {
+        "zone": "OA",
+        "row_from": 1,
+        "row_to": 10,
+        "seats": 50,
+        "arm_m": 11.5,
+        "max_weight_kg": 5000
+      },
+      {
+        "zone": "OB",
+        "row_from": 11,
+        "row_to": 21,
+        "seats": 55,
+        "arm_m": 19.2,
+        "max_weight_kg": 5500
+      },
+      {
+        "zone": "OC",
+        "row_from": 22,
+        "row_to": 32,
+        "seats": 55,
+        "arm_m": 26.6,
+        "max_weight_kg": 5500
+      }
+    ],
+    "holds": [
+      {
+        "hold": "FWD",
+        "arm_m": 13.46,
+        "max_weight_kg": 2446,
+        "max_volume_m3": 12.65,
+        "dg_forbidden_classes": []
+      },
+      {
+        "hold": "AFT",
+        "arm_m": 29.47,
+        "max_weight_kg": 2606,
+        "max_volume_m3": 14.81,
+        "dg_forbidden_classes": []
+      }
+    ]
+  }
+}
