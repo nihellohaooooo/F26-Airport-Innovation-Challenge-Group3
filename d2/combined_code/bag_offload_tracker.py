@@ -1,38 +1,64 @@
 """Bag classification, pull ordering, risk flags, and manifest reconciliation."""
+import re
+
+from common import parse_bool
 
 
 def _minutes(value):
     if not value:
         return None
-    h, m = str(value).split(":", 1)
-    return int(h) * 60 + int(m)
+    match = re.fullmatch(r"\s*(\d{1,2}):(\d{2})(?::(\d{2}))?\s*", str(value))
+    if not match:
+        return None
+    hour, minute, second = (int(part or 0) for part in match.groups())
+    if hour > 23 or minute > 59 or second > 59:
+        return None
+    return hour * 60 + minute + second / 60
 
 
-def _removed_ids(rows):
-    return {str(p.get("pax_id", p.get("id", ""))).strip() for p in rows
-            if p.get("removed_by_dcs") is True or
-            str(p.get("removed_by_dcs", "")).lower() in {"true", "1", "yes"}}
+def _after_cutoff(eta, cutoff):
+    if eta is None or cutoff is None:
+        return False
+    # The manifests store clock times without dates. Treat an early-morning ETA
+    # as next-day only when the cutoff is late evening; e.g. 00:10 after 23:50.
+    if cutoff >= 22 * 60 and eta <= 2 * 60:
+        eta += 24 * 60
+    return eta > cutoff
 
 
-def get_removed_passenger_ids(removed_rows):
-    return {str(row.get("pax_id", row.get("id", ""))).strip() for row in removed_rows}
+def _known_location(location):
+    value = str(location or "").strip().lower()
+    return (value == "inbound" or value == "cart" or value.startswith("cart_")
+            or value == "hold" or value.startswith("hold_"))
 
 
 def classify_bags(bags, removed_passenger_ids, cutoff):
     cutoff_min = _minutes(cutoff)
+    removed_ids = {str(pid).strip() for pid in removed_passenger_ids}
     result = []
     for source in bags:
         bag = dict(source)
-        owner_removed = bag.get("owner_pax_id", bag.get("owner")) in removed_passenger_ids
-        late = bool(bag.get("is_connecting", bag.get("connecting", False))) and \
-            _minutes(bag.get("eta")) is not None and cutoff_min is not None and \
-            _minutes(bag.get("eta")) > cutoff_min
-        # An inbound bag arriving after cutoff cannot be physically intercepted
-        # in time, even when its owner was removed. Count it as left behind,
-        # rather than claiming it was pulled.
-        if late and bag.get("location") == "inbound":
+        owner = str(bag.get("owner_pax_id", bag.get("owner", ""))).strip()
+        owner_removed = owner in removed_ids
+        location = str(bag.get("location", "")).strip().lower()
+        eta_min = _minutes(bag.get("eta"))
+        location_known = _known_location(location)
+        is_connecting = parse_bool(bag.get("is_connecting", bag.get("connecting", False)))
+        late = _after_cutoff(eta_min, cutoff_min) and (location == "inbound" or is_connecting)
+
+        if not location_known:
+            bag["tracker_status"] = "unknown"
+            bag["pull_reason"] = "bag location unknown; hold off flight pending confirmation"
+            bag["at_risk"] = True
+        elif location == "inbound" and (eta_min is None or cutoff_min is None):
             bag["tracker_status"] = "at_risk"
-            bag["pull_reason"] = "connecting bag arrives after loading cutoff"
+            bag["pull_reason"] = "inbound arrival time or loading cutoff unknown"
+            bag["at_risk"] = True
+        # An inbound bag arriving after cutoff cannot be physically intercepted
+        # in time, even when its owner was removed.
+        elif late and location == "inbound":
+            bag["tracker_status"] = "at_risk"
+            bag["pull_reason"] = "inbound bag arrives after loading cutoff"
             bag["at_risk"] = True
         elif owner_removed:
             bag["tracker_status"] = "to_pull"
@@ -42,7 +68,7 @@ def classify_bags(bags, removed_passenger_ids, cutoff):
             bag["tracker_status"] = "at_risk"
             bag["pull_reason"] = "connecting bag arrives after loading cutoff"
             bag["at_risk"] = True
-        elif bag.get("location") == "inbound":
+        elif location == "inbound":
             bag["tracker_status"] = "inbound"
             bag["pull_reason"] = "arrives before loading cutoff"
         else:

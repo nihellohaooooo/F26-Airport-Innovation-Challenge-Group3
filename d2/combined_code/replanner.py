@@ -1,6 +1,8 @@
 """MILP load planner. All weights are kg, volumes m3, and arms metres."""
 import pulp
 
+from common import parse_bool
+
 
 def _bump_cost(priority):
     """Penalty for bumping cargo: priority 1 is most important, 5 least.
@@ -35,7 +37,7 @@ def _make_items(bags, cargo, aircraft):
                       "volume": float(source.get("volume_m3", 0)),
                       "priority": int(source.get("priority", 3)),
                       "current_hold": source.get("current_hold") or None,
-                      "must_fly": bool(source.get("must_fly", False)),
+                      "must_fly": parse_bool(source.get("must_fly", False)),
                       "allowed": allowed, "source": source})
     return items
 
@@ -81,7 +83,7 @@ def build_model(items, aircraft, fixed_weight, fixed_moment, options=None):
     moves = pulp.lpSum(move_terms)
     stages = [("bags_left", bags_left), ("cargo_left", cargo_left), ("moves", moves),
               ("target_cg_deviation", d_pos + d_neg)]
-    if options.get("lightning_mode"):
+    if parse_bool(options.get("lightning_mode", False)):
         stages[1], stages[2] = stages[2], stages[1]
     return prob, x, left, W, M, stages
 
@@ -115,6 +117,9 @@ def _action_line(action, item, instruction, reason):
 
 
 def _move_reason(item, old, new, situation, holds):
+    if old not in holds:
+        return _action_line("MOVE", item, f"{old} -> {new}",
+                            f"{old} is not a hold on the replacement aircraft")
     spec = holds[old]
     excesses = []
     if situation["load"][old] > float(spec["max_weight_kg"]):
@@ -163,22 +168,38 @@ def solve_load_plan(bags, cargo, aircraft, fixed_weight, fixed_moment, options=N
     time_limit = int(options.get("time_limit_s", 10))
     solver = pulp.PULP_CBC_CMD(msg=False, timeLimit=time_limit)
     objective_values = {}
+    plan_status = "OPTIMAL"
+    plan_reason = "Optimal plan found within all hard limits"
     try:
         for idx, (name, expr) in enumerate(stages):
             prob.setObjective(expr)
             prob.solve(solver)
             status = pulp.LpStatus[prob.status]
-            if status != "Optimal":
-                return {"status": "INFEASIBLE" if status == "Infeasible" else "ERROR",
-                        "reason": (_infeasible_reason(items, aircraft, fixed_weight)
-                                   if status == "Infeasible" else
-                                   f"Solver did not find an optimal safe plan at {name}: {status}"),
+            solution_status = getattr(prob, "sol_status", None)
+            has_incumbent = solution_status in {
+                pulp.LpSolutionOptimal, pulp.LpSolutionIntegerFeasible,
+            } and all(variable.value() is not None for variable in left.values()) \
+                and all(variable.value() is not None for variable in x.values())
+            if status == "Infeasible":
+                return {"status": "INFEASIBLE",
+                        "reason": _infeasible_reason(items, aircraft, fixed_weight),
+                        "items": items, "bag_holds": {}, "cargo_holds": {},
+                        "bags_left_behind": [], "cargo_bumped": [], "moves": [], "offloads": [],
+                        "handling_actions": {"moves": 0, "offloads": 0, "total": 0},
+                        "objective_values": objective_values}
+            if not has_incumbent:
+                return {"status": "ERROR",
+                        "reason": f"Solver did not produce a feasible plan at {name}: {status}",
                         "items": items, "bag_holds": {}, "cargo_holds": {},
                         "bags_left_behind": [], "cargo_bumped": [], "moves": [], "offloads": [],
                         "handling_actions": {"moves": 0, "offloads": 0, "total": 0},
                         "objective_values": objective_values}
             best = float(pulp.value(expr) or 0)
             objective_values[name] = round(best, 4)
+            if status != "Optimal" or solution_status != pulp.LpSolutionOptimal:
+                plan_status = "FEASIBLE"
+                plan_reason = f"A feasible plan was found, but optimality was not proven at {name}."
+                break
             if idx < len(stages) - 1:
                 tol = 1e-5 if name != "target_cg_deviation" else 1e-4
                 prob += expr <= best + tol, f"lock_{name}"
@@ -191,7 +212,7 @@ def solve_load_plan(bags, cargo, aircraft, fixed_weight, fixed_moment, options=N
 
     holds = _hold_specs(aircraft)
     situation = _starting_situation(items, aircraft, fixed_weight)
-    lightning = bool(options.get("lightning_mode"))
+    lightning = parse_bool(options.get("lightning_mode", False))
     bag_holds, cargo_holds, left_bags, bumped, moves, offloads = {}, {}, [], [], [], []
     for i, item in enumerate(items):
         hold = next((h for h in item["allowed"] if (x[i, h].value() or 0) > 0.5), None)
@@ -219,7 +240,7 @@ def solve_load_plan(bags, cargo, aircraft, fixed_weight, fixed_moment, options=N
                                       "bag cannot fit in any safe hold assignment")
             offloads.append({"id": item["id"], "kind": item["kind"], "from": old,
                              "weight_kg": item["weight"], "reason": reason})
-    return {"status": "OPTIMAL", "reason": "Optimal plan found within all hard limits",
+    return {"status": plan_status, "reason": plan_reason,
             "items": items, "bag_holds": bag_holds, "cargo_holds": cargo_holds,
             "bags_left_behind": left_bags, "cargo_bumped": bumped, "moves": moves,
             "offloads": offloads,

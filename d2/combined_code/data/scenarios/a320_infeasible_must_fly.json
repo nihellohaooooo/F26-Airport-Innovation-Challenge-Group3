@@ -4654,7 +4654,7 @@
     },
     {
       "cargo_id": "C06",
-      "description": "Lithium batteries",
+      "description": "Lithium-ion batteries contained in equipment (UN 3481)",
       "weight_kg": 80.0,
       "volume_m3": 0.4,
       "priority": 2,
@@ -4709,7 +4709,7 @@
     },
     {
       "cargo_id": "C11",
-      "description": "Wet-cell batteries (corrosive)",
+      "description": "Wet-cell batteries, UN 2794 (2 packages)",
       "weight_kg": 60.0,
       "volume_m3": 0.3,
       "priority": 3,

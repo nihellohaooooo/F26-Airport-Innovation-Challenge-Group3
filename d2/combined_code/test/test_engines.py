@@ -122,14 +122,15 @@ class SafetyGateDemoTests(unittest.TestCase):
             {"zone": "CABIN", "row_from": 1, "row_to": 2, "seats": 2,
              "arm_m": 10, "max_weight_kg": 200},
         ]
-        self.passengers = [{"pax_id": "P1", "category": "M"}]
+        self.passengers = [{"pax_id": "P1", "category": "M", "seat": "1A", "row": 1}]
         self.bags = [{"tag": "B1", "owner_pax_id": "P1", "weight_kg": 50,
                       "volume_m3": 0.1}]
         self.cargo = [{"cargo_id": "C1", "weight_kg": 50, "volume_m3": 1,
                        "dg_class": ""}]
         self.plan = {
             "passenger_ids": ["P1"],
-            "mapped_passengers": [{"pax_id": "P1", "category": "M", "zone": "CABIN"}],
+            "mapped_passengers": [{"pax_id": "P1", "category": "M", "seat": "1A", "row": 1,
+                                   "seat_occupied": True, "zone": "CABIN"}],
             "bag_holds": {"B1": "FWD"}, "cargo_holds": {"C1": "AFT"},
             "cargo_bumped_ids": [], "bags_offloaded": [], "bags_left_behind": [],
         }
