@@ -117,7 +117,7 @@ def run_scenario(scenario, aircraft_profiles=None, options=None, standard_weight
     if mapping["doesnt_fit"]:
         reasons.append(f"{len(mapping['doesnt_fit'])} retained passenger(s) have no valid seat; refer to DCS.")
     if plan["cargo_bumped"]:
-        reasons.extend(f"{c['cargo_id']} bumped: {c['reason']}" for c in plan["cargo_bumped"])
+        reasons.extend(c["reason"] for c in plan["cargo_bumped"])
     if plan["moves"]:
         reasons.extend(m["reason"] for m in plan["moves"])
 
@@ -134,6 +134,7 @@ def run_scenario(scenario, aircraft_profiles=None, options=None, standard_weight
         "hold_assignments": {"bags": plan["bag_holds"], "cargo": plan["cargo_holds"],
                              "loads": gate["metrics"]["hold_loads"]},
         "moves": plan["moves"], "cargo_bumped": plan["cargo_bumped"],
+        "offloads": plan.get("offloads", []), "handling_actions": plan.get("handling_actions"),
         "metrics": gate["metrics"], "count_check": gate["count_check"],
         "checks": gate["checks"],
         "count_check": {**gate["count_check"], "final_plan_verified": True,
@@ -166,10 +167,13 @@ def _print_result(result):
     print(f"  Bag assignments: {len(result['hold_assignments'].get('bags', {}))}; cargo assignments: {len(result['hold_assignments'].get('cargo', {}))}")
     print(f"\nMOVES: {len(result['moves'])}")
     for m in result["moves"]:
-        print(f"  {m['id']}: {m['from']} -> {m['to']} — {m['reason']}")
+        print(f"  {m['reason']}")
+    actions = result.get("handling_actions")
+    if actions:
+        print(f"HANDLING ACTIONS: {actions['total']} ({actions['moves']} moved, {actions['offloads']} offloaded)")
     print(f"CARGO BUMPED: {len(result['cargo_bumped'])}")
     for c in result["cargo_bumped"]:
-        print(f"  {c['cargo_id']} {c['description']} ({c['weight_kg']:.1f} kg), priority {c['priority']}")
+        print(f"  {c['reason']}")
     if result["metrics"]:
         m = result["metrics"]
         print(f"\nFINAL: {m['total_weight_kg']:.1f} / {m['max_zfw_kg']:.1f} kg ZFW · CG {m['cg_m']:.3f} m "
