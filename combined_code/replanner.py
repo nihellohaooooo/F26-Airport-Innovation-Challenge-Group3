@@ -58,13 +58,11 @@ def build_model(items, aircraft, fixed_weight, fixed_moment, options=None):
         max_priority = max([item["priority"] for item in items if item["kind"] == "cargo"] or [1])
     else:
         max_priority = 1
-
     # Strict priority: each level costs 10x the next (p1 = 10,000,000 ... p5 = 1,000), so a
     # lower-priority item is always bumped first. + weight breaks ties between equal priorities.
     cargo_left = pulp.lpSum(
         (10 ** (8 - item["priority"]) + item["weight"]) * left[i]
         for i, item in enumerate(items) if item["kind"] == "cargo")
-    
     move_terms = []
     for i, item in enumerate(items):
         h = item["current_hold"]
@@ -76,6 +74,59 @@ def build_model(items, aircraft, fixed_weight, fixed_moment, options=None):
     if options.get("lightning_mode"):
         stages[1], stages[2] = stages[2], stages[1]
     return prob, x, left, W, M, stages
+
+
+
+# ---------------------------------------------------------------------------
+# Plain-language explanations ("explains why")
+# ---------------------------------------------------------------------------
+
+def _holds(aircraft):
+    """Hold specs as a dict keyed by hold name, whichever format the profile uses."""
+    return {h["hold"]: h for h in aircraft["holds"]} if isinstance(aircraft["holds"], list) else aircraft["holds"]
+
+
+def _name(item):
+    """Readable name: cargo description, or 'bag AC100123'."""
+    return item["source"].get("description") or f"{item['kind']} {item['id']}"
+
+
+def _starting_situation(items, aircraft, fixed_weight):
+    """Facts about the position before re-planning, used to explain each decision."""
+    holds = _holds(aircraft)
+    before = {h: 0.0 for h in holds}
+    for item in items:
+        if item["current_hold"] in before:
+            before[item["current_hold"]] += item["weight"]
+    everything = float(fixed_weight) + sum(item["weight"] for item in items)
+    return {"type": aircraft["type"], "before_kg": before,
+            "over_mzfw_kg": everything - float(aircraft["max_zero_fuel_weight_kg"]),
+            "cg_target_m": float(aircraft["cg_target_m"])}
+
+
+def _move_reason(item, old, new, sit, aircraft, holds):
+    cur, cap = sit["before_kg"][old], float(holds[old]["max_weight_kg"])
+    if cur > cap:
+        why = f"the {old} hold was {cur - cap:.0f} kg over its {sit['type']} limit ({cur:.0f} / {cap:.0f} kg)"
+    else:
+        why = "needed to keep the aircraft within its weight and balance limits"
+    return (f"{_name(item)} moved {old} -> {new}: {why}. {new} was chosen because it keeps the CG "
+            f"closest to the {sit['cg_target_m']} m target.")
+
+
+def _bump_reason(item, sit, lightning):
+    if sit["over_mzfw_kg"] > 0:
+        cause = (f"with everything loaded the aircraft would be {sit['over_mzfw_kg']:.0f} kg over "
+                 f"its max zero-fuel weight")
+    else:
+        cause = "not everything fits within the hold, weight and balance limits"
+    handling = (f"it must be taken out of the {item['current_hold']} hold (1 offload)" if item["current_hold"]
+                else "it is still on the dock, so leaving it needs no unloading")
+    if lightning:
+        rule = "lightning mode keeps handling to a minimum"
+    else:
+        rule = "lower-priority cargo is removed before higher-priority cargo"
+    return f"Priority {item['priority']}: {cause}; {rule}; {handling}."
 
 
 def solve_load_plan(bags, cargo, aircraft, fixed_weight, fixed_moment, options=None):
@@ -108,9 +159,13 @@ def solve_load_plan(bags, cargo, aircraft, fixed_weight, fixed_moment, options=N
                 "bags_left_behind": [], "cargo_bumped": [], "moves": [],
                 "objective_values": objective_values}
 
-    bag_holds, cargo_holds, left_bags, bumped, moves = {}, {}, [], [], []
+    holds = _holds(aircraft)
+    sit = _starting_situation(items, aircraft, fixed_weight)
+    lightning = bool(options.get("lightning_mode"))
+    bag_holds, cargo_holds, left_bags, bumped, moves, offloads = {}, {}, [], [], [], []
     for i, item in enumerate(items):
         hold = next((h for h in item["allowed"] if (x[i, h].value() or 0) > 0.5), None)
+        old = item["current_hold"]
         if item["kind"] == "bag":
             if hold:
                 bag_holds[item["id"]] = hold
@@ -122,14 +177,20 @@ def solve_load_plan(bags, cargo, aircraft, fixed_weight, fixed_moment, options=N
             src = item["source"]
             bumped.append({"cargo_id": item["id"], "description": src.get("description", ""),
                            "weight_kg": item["weight"], "priority": item["priority"],
-                           "reason": "Offloaded to satisfy aircraft limits while retaining higher-priority cargo where feasible"})
-        old = item["current_hold"]
+                           "reason": _bump_reason(item, sit, lightning)})
         if hold and old and hold != old:
             moves.append({"id": item["id"], "kind": item["kind"], "from": old, "to": hold,
-                          "reason": f"Move {item['id']} from {old} to {hold} to meet hold and balance limits"})
+                          "reason": _move_reason(item, old, hold, sit, aircraft, holds)})
+        if not hold and old:   # was already loaded, now has to come back out
+            offloads.append({"id": item["id"], "kind": item["kind"], "from": old,
+                             "weight_kg": item["weight"],
+                             "reason": f"{_name(item)} must be taken out of the {old} hold"})
     return {"status": "OPTIMAL", "reason": "Optimal plan found within all hard limits",
             "items": items, "bag_holds": bag_holds, "cargo_holds": cargo_holds,
             "bags_left_behind": left_bags, "cargo_bumped": bumped, "moves": moves,
+            "offloads": offloads,
+            "handling_actions": {"moves": len(moves), "offloads": len(offloads),
+                                 "total": len(moves) + len(offloads)},
             "objective_values": objective_values,
             "total_weight_kg": round(float(pulp.value(W)), 1),
             "moment_kg_m": float(pulp.value(M))}

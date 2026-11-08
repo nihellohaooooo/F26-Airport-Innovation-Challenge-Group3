@@ -134,6 +134,7 @@ def run_scenario(scenario, aircraft_profiles=None, options=None, standard_weight
         "hold_assignments": {"bags": plan["bag_holds"], "cargo": plan["cargo_holds"],
                              "loads": gate["metrics"]["hold_loads"]},
         "moves": plan["moves"], "cargo_bumped": plan["cargo_bumped"],
+        "offloads": plan.get("offloads", []), "handling_actions": plan.get("handling_actions"),
         "metrics": gate["metrics"], "count_check": gate["count_check"],
         "checks": gate["checks"],
         "count_check": {**gate["count_check"], "final_plan_verified": True,
@@ -167,9 +168,14 @@ def _print_result(result):
     print(f"\nMOVES: {len(result['moves'])}")
     for m in result["moves"]:
         print(f"  {m['id']}: {m['from']} -> {m['to']} — {m['reason']}")
+    actions = result.get("handling_actions")
+    if actions:
+        print(f"HANDLING ACTIONS: {actions['total']} ({actions['moves']} moved, {actions['offloads']} offloaded)")
+        for o in result.get("offloads", []):
+            print(f"  Offload {o['id']} from {o['from']} — {o['reason']}")
     print(f"CARGO BUMPED: {len(result['cargo_bumped'])}")
     for c in result["cargo_bumped"]:
-        print(f"  {c['cargo_id']} {c['description']} ({c['weight_kg']:.1f} kg), priority {c['priority']}")
+        print(f"  {c['cargo_id']} {c['description']}: {c['reason']}")
     if result["metrics"]:
         m = result["metrics"]
         print(f"\nFINAL: {m['total_weight_kg']:.1f} / {m['max_zfw_kg']:.1f} kg ZFW · CG {m['cg_m']:.3f} m "
