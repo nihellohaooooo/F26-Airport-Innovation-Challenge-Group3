@@ -8,6 +8,18 @@ This project is an **equipment-swap re-planning module**. It takes the flight as
 
 **Scope:** we do **not** decide which passengers fly. The airline's departure control system (DCS) sends us the list of removed passengers. Everything after that is ours.
 
+## Run the combined dashboard
+
+From the `d2/` directory:
+
+```bash
+python -m pip install -r combined_code/requirements.txt
+python -m streamlit run combined_code/dashboard.py
+python -m unittest discover -s combined_code/test -v
+```
+
+The submitted combined-code test suite was run successfully: **11 tests passed**. It covers passenger mapping, bag reconciliation, load planning, safety checks, and end-to-end SAFE, BLOCKED, and UNSAFE scenarios.
+
 ## Workflow
 
 ```mermaid
