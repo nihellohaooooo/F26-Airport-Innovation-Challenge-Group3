@@ -58,9 +58,13 @@ def build_model(items, aircraft, fixed_weight, fixed_moment, options=None):
         max_priority = max([item["priority"] for item in items if item["kind"] == "cargo"] or [1])
     else:
         max_priority = 1
+
+    # Strict priority: each level costs 10x the next (p1 = 10,000,000 ... p5 = 1,000), so a
+    # lower-priority item is always bumped first. + weight breaks ties between equal priorities.
     cargo_left = pulp.lpSum(
-        item["weight"] * max(1, max_priority + 1 - item["priority"]) * left[i]
+        (10 ** (8 - item["priority"]) + item["weight"]) * left[i]
         for i, item in enumerate(items) if item["kind"] == "cargo")
+    
     move_terms = []
     for i, item in enumerate(items):
         h = item["current_hold"]
