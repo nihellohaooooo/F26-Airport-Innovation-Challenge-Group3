@@ -5,6 +5,7 @@ from html import escape
 import plotly.graph_objects as go
 import streamlit as st
 
+from overview_summary import render_overview
 from pipeline import DATA_DIR, run_scenario
 
 
@@ -717,20 +718,10 @@ def main():
     _hero(scenario_label, settings)
     if demo_note:
         st.caption(demo_note)
-    _status_banner(result)
     overview, engines = st.tabs(["🌐 Combined overview", "🧩 Engine walkthrough"])
 
     with overview:
-        st.markdown("**One flight, four engines:** map passengers → track bags → re-plan holds → independently verify the load.")
-        metrics = result.get("metrics")
-        if result["status"] in {"BLOCKED", "UNSAFE"}:
-            _render_no_plan(result)
-        if metrics:
-            _render_overview(result, metrics)
-        else:
-            st.info("Final weight and CG are unavailable because the optimizer found no feasible plan.")
-        st.write("")
-        _render_plan(result)
+        render_overview(scenario, result, settings)
 
     with engines:
         stage = st.selectbox("Choose a pipeline stage", [
