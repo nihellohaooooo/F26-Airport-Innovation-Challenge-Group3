@@ -15,32 +15,39 @@ RESULT_VIEW_REVISION = 3
 # Status colours are reserved for state (always paired with an icon + label);
 # the accent/series colours carry identity only.
 STATUS = {
-    "SAFE":         {"icon": "✅", "color": "#0ca30c", "tint": "rgba(12,163,12,0.10)",  "label": "Plan cleared by Safety Gate"},
-    "NEEDS REVIEW": {"icon": "🟠", "color": "#ec835a", "tint": "rgba(236,131,90,0.12)", "label": "Load controller review required"},
-    "BLOCKED":      {"icon": "⛔", "color": "#d03b3b", "tint": "rgba(208,59,59,0.10)",  "label": "Plan blocked — cannot proceed"},
-    "UNSAFE":       {"icon": "🚫", "color": "#d03b3b", "tint": "rgba(208,59,59,0.10)",  "label": "Plan unsafe — do not dispatch"},
+    "SAFE":         {"icon": "●", "color": "#1c5d91", "tint": "#e7f3fc", "label": "Plan cleared by Safety Gate"},
+    "NEEDS REVIEW": {"icon": "◆", "color": "#3479ad", "tint": "#e1f0fb", "label": "Load controller review required"},
+    "BLOCKED":      {"icon": "■", "color": "#24567e", "tint": "#d7eafa", "label": "Plan blocked — cannot proceed"},
+    "UNSAFE":       {"icon": "⬟", "color": "#153d5d", "tint": "#c9e1f4", "label": "Plan unsafe — do not dispatch"},
 }
-STATUS_DEFAULT = {"icon": "ℹ️", "color": "#2a78d6", "tint": "rgba(42,120,214,0.10)", "label": ""}
-GOOD, WARN, CRIT = "#0ca30c", "#fab219", "#d03b3b"
+STATUS_DEFAULT = {"icon": "ℹ️", "color": "#2a78d6", "tint": "#e5f2fc", "label": ""}
+GOOD, WARN, CRIT = "#1c5d91", "#3479ad", "#153d5d"
 ACCENT = "#2a78d6"
-SERIES = ["#2a78d6", "#eb6834", "#1baf7a"]
-MUTED = "rgba(128,128,128,0.55)"
-GRID = "rgba(128,128,128,0.18)"
+MUTED = "rgba(27,65,99,0.52)"
+GRID = "rgba(42,120,214,0.18)"
 PLOT_CONFIG = {"displayModeBar": False, "responsive": True}
 
 CSS = """
 <style>
+.stApp, [data-testid="stAppViewContainer"] {background:#dceefa;color:#101c28;}
+[data-testid="stSidebar"] > div {background:#c9e2f5;}
+[data-testid="stHeader"] {background:rgba(220,238,250,.96);}
 .block-container {padding-top: 3.2rem; padding-bottom: 3rem; max-width: 1400px;}
 h1, h2, h3 {letter-spacing: -0.01em;}
+h1, h2, h3, p, label, [data-testid="stCaptionContainer"] {color:#101c28;}
 div[data-testid="stSidebar"] h2 {font-size: 1.05rem;}
+button[kind="primary"] {background:#1e659b;border-color:#1e659b;color:#fff;}
+[data-testid="stVerticalBlockBorderWrapper"] {background:#e9f5fd;border-color:#a8cce6;border-radius:12px;}
+[data-testid="stExpander"] {background:#e5f2fb;border-color:#a8cce6;}
+[data-testid="stTab"] {color:#173b58;}
+[role="tab"][aria-selected="true"] {border-bottom-color:#2a78d6;color:#102a40;}
+input, textarea, [data-baseweb="select"] > div {background:#f2f9fe;color:#101c28;}
 
 .hero {display:flex; align-items:center; justify-content:space-between; gap:1rem;
-       padding: 1.1rem 1.4rem; border-radius: 14px; margin-bottom: 1rem;
-       background: linear-gradient(120deg, #0f2a47 0%, #1a4a7a 55%, #2a78d6 100%); color: #fff;}
-.hero h1 {color:#fff; margin:0; font-size:1.6rem; line-height:1.2; padding:0;}
-.hero .sub {opacity:.82; font-size:.86rem; margin-top:.25rem;}
-.hero .chip {background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25);
-             padding:.35rem .75rem; border-radius:999px; font-size:.82rem; white-space:nowrap;}
+       padding: .55rem 0; border-bottom:1px solid rgba(42,120,214,.24); margin-bottom:.7rem;}
+.hero h1 {margin:0; font-size:1.35rem; line-height:1.2; padding:0;}
+.hero .sub {opacity:.72; font-size:.82rem; margin-top:.18rem;}
+.hero .chip {font-size:.8rem; opacity:.75; white-space:nowrap;}
 
 .status {border-radius: 12px; padding: .9rem 1.2rem; margin: .2rem 0 1.1rem;
          border: 1px solid; border-left-width: 6px;}
@@ -52,14 +59,14 @@ div[data-testid="stSidebar"] h2 {font-size: 1.05rem;}
 
 .kpi-grid {display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:.8rem; margin-bottom:.4rem;}
 @media (max-width: 900px) {.kpi-grid {grid-template-columns: repeat(2, minmax(0,1fr));}}
-.kpi {border:1px solid rgba(128,128,128,.22); border-radius:12px; padding:.85rem 1rem;
-      background: rgba(128,128,128,.04);}
+.kpi {border:1px solid #b6d5eb; border-radius:12px; padding:.85rem 1rem;
+      background:#edf7fe;color:#101c28;}
 .kpi .k-label {font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; opacity:.65; font-weight:600;}
 .kpi .k-value {font-size:1.55rem; font-weight:700; margin-top:.15rem; line-height:1.25;
                font-variant-numeric: tabular-nums;}
 .kpi .k-unit {font-size:.85rem; font-weight:500; opacity:.6; margin-left:.2rem;}
 .kpi .k-foot {font-size:.8rem; opacity:.75; margin-top:.2rem;}
-.kpi .bar {height:6px; border-radius:4px; background:rgba(128,128,128,.18); margin-top:.5rem; overflow:hidden;}
+.kpi .bar {height:6px; border-radius:4px; background:rgba(42,120,214,.14); margin-top:.5rem; overflow:hidden;}
 .kpi .bar > span {display:block; height:100%; border-radius:4px;}
 
 .section-title {font-size:1.05rem; font-weight:700; margin:.2rem 0 .1rem;}
@@ -69,30 +76,31 @@ div[data-testid="stSidebar"] h2 {font-size: 1.05rem;}
        border:1px solid; margin-right:.3rem;}
 .tracker-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;margin:.8rem 0;}
 @media (max-width: 800px) {.tracker-grid {grid-template-columns:repeat(2,minmax(0,1fr));}}
-.tracker-card {border:1px solid rgba(128,128,128,.2);border-top:4px solid;border-radius:10px;
-               padding:.75rem .9rem;background:rgba(128,128,128,.035);}
+.tracker-card {border:1px solid #b6d5eb;border-top:4px solid;border-radius:10px;
+               padding:.75rem .9rem;background:#edf7fe;color:#101c28;}
 .tracker-card .label {font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;opacity:.68;font-weight:650;}
 .tracker-card .value {font-size:1.6rem;font-weight:750;line-height:1.25;margin-top:.12rem;font-variant-numeric:tabular-nums;}
 .tracker-card .note {font-size:.76rem;opacity:.72;margin-top:.12rem;}
-.tracker-bar {height:18px;display:flex;overflow:hidden;border-radius:9px;background:rgba(128,128,128,.12);margin:.7rem 0 .35rem;}
+.tracker-bar {height:18px;display:flex;overflow:hidden;border-radius:9px;background:rgba(42,120,214,.12);margin:.7rem 0 .35rem;}
 .tracker-bar span {height:100%;min-width:0;}
 .tracker-legend {display:flex;gap:1rem;flex-wrap:wrap;font-size:.78rem;opacity:.78;}
+.action-strip {display:flex;gap:.45rem;flex-wrap:wrap;margin:-.45rem 0 1rem;}
+.action-strip span {padding:.28rem .6rem;border-radius:999px;background:rgba(42,120,214,.09);
+                    font-size:.8rem;font-weight:600;font-variant-numeric:tabular-nums;}
+.engine-cards {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;margin:.75rem 0 1rem;}
+@media (max-width: 900px) {.engine-cards {grid-template-columns:repeat(2,minmax(0,1fr));}}
+.engine-card {border:1px solid #b6d5eb;border-left:4px solid;border-radius:10px;
+              padding:.7rem .85rem;background:#edf7fe;color:#101c28;}
+.engine-card .label {font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;opacity:.68;font-weight:650;}
+.engine-card .value {font-size:1.25rem;font-weight:750;line-height:1.25;margin-top:.1rem;font-variant-numeric:tabular-nums;}
+.engine-card .note {font-size:.76rem;opacity:.72;margin-top:.12rem;}
+div[data-testid="stAlert"] {background:#e7f3fc;border-color:#a8cce6;color:#101c28;}
+div[data-testid="stAlert"] svg {color:#1e659b;fill:#1e659b;}
 </style>
 """
 
 
 # ── Helpers ─────────────────────────────────────────────────────────────────
-def _scenario_files():
-    return sorted(SCENARIO_DIR.glob("*.json"))
-
-
-def _scenario_name(path):
-    try:
-        return json.loads(path.read_text()).get("name", path.stem)
-    except (OSError, json.JSONDecodeError):
-        return path.stem
-
-
 def _fmt(value, spec=",.1f", default="—"):
     try:
         return format(float(value), spec)
@@ -112,7 +120,7 @@ def _base_layout(fig, height, **kwargs):
         height=height,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(size=13),
+        font=dict(size=13, color="#101c28"),
         showlegend=False,
         hoverlabel=dict(font_size=12),
         bargap=0.35,
@@ -136,7 +144,7 @@ def _util_color(fraction):
 
 
 # ── Header & status ─────────────────────────────────────────────────────────
-def _hero(scenario_label, settings):
+def _hero(scenario_label, settings, loading_cutoff):
     chips = f"{settings['season'].title()} weights · +{settings['safety_buffer_pct']}% buffer"
     if settings["lightning_mode"]:
         chips += " · ⚡ Lightning"
@@ -144,8 +152,8 @@ def _hero(scenario_label, settings):
         f"""<div class="hero"><div>
         <h1>✈️ Aircraft Swap Re-planner</h1>
         <div class="sub">{escape(scenario_label)} · illustrative aircraft profiles ·
-        qualified load-controller review required</div></div>
-        <div class="chip">{escape(chips)}</div></div>""",
+        qualified load-controller review required · Loading cutoff {escape(str(loading_cutoff or '—'))}</div></div>
+        <div class="chip">Replacement aircraft: {escape(str(settings.get('aircraft', '')))} · {escape(chips)}</div></div>""",
         unsafe_allow_html=True,
     )
 
@@ -197,7 +205,7 @@ def _kpi_row(result, metrics):
 
     st.markdown(
         '<div class="kpi-grid">'
-        + _kpi("Replacement aircraft", result["aircraft"], foot="Swap target")
+        + _kpi("Actions required", _action_count(result), foot=_action_breakdown(result))
         + _kpi("Passengers mapped", f"{mapped} / {capacity}", foot=pax_foot,
                bar=(pax_frac, ACCENT))
         + _kpi("Zero-fuel weight", _fmt(zfw), "kg", zfw_foot, bar=(zfw_frac, _util_color(zfw_frac)))
@@ -205,6 +213,42 @@ def _kpi_row(result, metrics):
         + "</div>",
         unsafe_allow_html=True,
     )
+
+
+def _action_count(result):
+    bags = result.get("bag_actions", {})
+    return (len(bags.get("pull_list", [])) + len(result.get("moves", []))
+            + len(result.get("offloads", [])))
+
+
+def _action_breakdown(result):
+    bags = result.get("bag_actions", {})
+    return (f"{len(bags.get('pull_list', []))} pulls · {len(result.get('moves', []))} moves · "
+            f"{len(result.get('offloads', []))} offloads")
+
+
+def _action_strip(result):
+    bags = result.get("bag_actions", {})
+    values = [
+        (f"{len(bags.get('pull_list', []))} pulls", "pulls"),
+        (f"{len(result.get('moves', []))} moves", "moves"),
+        (f"{len(result.get('offloads', []))} offloads", "offloads"),
+        (f"{len(bags.get('at_risk', []))} at risk", "at-risk bags"),
+        (f"{len(result.get('cargo_bumped', []))} cargo bumped", "bumped cargo items"),
+    ]
+    items = "".join(f'<span title="{escape(label)}">{escape(value)}</span>' for value, label in values)
+    st.markdown(f'<div class="action-strip">{items}</div>', unsafe_allow_html=True)
+
+
+def _engine_cards(items):
+    cards = "".join(
+        f'<div class="engine-card" style="border-left-color:{color}">'
+        f'<div class="label">{escape(str(label))}</div>'
+        f'<div class="value">{escape(str(value))}</div>'
+        f'<div class="note">{escape(str(note))}</div></div>'
+        for label, value, note, color in items
+    )
+    st.markdown(f'<div class="engine-cards">{cards}</div>', unsafe_allow_html=True)
 
 
 # ── Charts ──────────────────────────────────────────────────────────────────
@@ -219,11 +263,11 @@ def _cg_chart(metrics):
     fig = go.Figure()
     # Out-of-envelope zones, then the allowed envelope band.
     fig.add_shape(type="rect", x0=lo, x1=fwd, y0=0.3, y1=0.7, line_width=0,
-                  fillcolor="rgba(208,59,59,0.10)", layer="below")
+                  fillcolor="rgba(77,145,198,0.10)", layer="below")
     fig.add_shape(type="rect", x0=aft, x1=hi, y0=0.3, y1=0.7, line_width=0,
-                  fillcolor="rgba(208,59,59,0.10)", layer="below")
+                  fillcolor="rgba(77,145,198,0.10)", layer="below")
     fig.add_shape(type="rect", x0=fwd, x1=aft, y0=0.3, y1=0.7, line_width=0,
-                  fillcolor="rgba(12,163,12,0.16)", layer="below")
+                  fillcolor="rgba(23,105,170,0.16)", layer="below")
     for x, name in ((fwd, "Fwd limit"), (aft, "Aft limit")):
         fig.add_shape(type="line", x0=x, x1=x, y0=0.22, y1=0.78, line=dict(color=MUTED, width=2))
         fig.add_annotation(x=x, y=0.16, text=f"{name}<br><b>{x:.2f} m</b>", showarrow=False,
@@ -247,24 +291,6 @@ def _cg_chart(metrics):
     return fig
 
 
-def _payload_chart(metrics, mapping):
-    pax_kg = sum(float(z.get("weight_kg") or 0) for z in mapping["zone_weights"].values())
-    rows = [("Passengers", pax_kg), ("Bags", float(metrics.get("bag_weight_kg") or 0)),
-            ("Cargo", float(metrics.get("cargo_weight_kg") or 0))]
-    total = sum(v for _, v in rows) or 1
-    fig = go.Figure(go.Bar(
-        y=[r[0] for r in rows][::-1], x=[r[1] for r in rows][::-1], orientation="h",
-        marker=dict(color=ACCENT, cornerradius=4),
-        text=[f"{v:,.0f} kg · {v/total:.0%}" for _, v in rows][::-1], textposition="outside",
-        cliponaxis=False,
-        hovertemplate="%{y}: <b>%{x:,.1f} kg</b><extra></extra>",
-    ))
-    _base_layout(fig, 170, margin=dict(l=8, r=90, t=4, b=8))
-    fig.update_xaxes(showgrid=True, ticksuffix=" kg", rangemode="tozero")
-    fig.update_yaxes(showgrid=False)
-    return fig
-
-
 def _zone_chart(mapping):
     zones = sorted(mapping["zone_weights"].items(), key=lambda kv: kv[1].get("arm_m", 0))
     names = [n for n, _ in zones]
@@ -272,12 +298,12 @@ def _zone_chart(mapping):
         x=names, y=[z["weight_kg"] for _, z in zones],
         marker=dict(color=ACCENT, cornerradius=4),
         customdata=[[z["passenger_count"], z["arm_m"]] for _, z in zones],
-        text=[f"{z['passenger_count']} pax" for _, z in zones], textposition="outside", cliponaxis=False,
+        text=[f"{z['weight_kg']:,.0f} kg" for _, z in zones], textposition="outside", cliponaxis=False,
         hovertemplate="<b>%{x}</b><br>%{customdata[0]} passengers<br>%{y:,.1f} kg"
                       "<br>Arm %{customdata[1]:.2f} m<extra></extra>",
     ))
     _base_layout(fig, 280, margin=dict(l=8, r=8, t=24, b=8))
-    fig.update_yaxes(ticksuffix=" kg", rangemode="tozero")
+    fig.update_yaxes(visible=False, showgrid=False, rangemode="tozero", fixedrange=True)
     fig.update_xaxes(showgrid=False, title=dict(text="Cabin zone (forward → aft)", font=dict(size=12)))
     return fig
 
@@ -285,32 +311,36 @@ def _zone_chart(mapping):
 def _hold_chart(result):
     loads = result["hold_assignments"].get("loads", {})
     limits = result["safety_gate"]["metrics"].get("hold_limits", {})
-    holds, weights, caps, vols = [], [], [], []
+    holds, weights, caps, vols, known = [], [], [], [], []
     for hold, load in loads.items():
-        limit = limits.get(hold, {}).get("max_weight_kg") or load["weight_kg"] or 1
+        limit = limits.get(hold, {}).get("max_weight_kg")
         holds.append(hold)
         weights.append(float(load["weight_kg"]))
-        caps.append(float(limit))
+        caps.append(float(limit) if limit is not None else 0.0)
+        known.append(limit is not None and float(limit) > 0)
         vols.append(float(load.get("volume_m3") or 0))
-    fracs = [w / c for w, c in zip(weights, caps)]
+    fracs = [w / c if k else None for w, c, k in zip(weights, caps, known)]
 
     fig = go.Figure()
     fig.add_trace(go.Bar(  # capacity track
-        y=holds, x=caps, orientation="h", marker=dict(color="rgba(128,128,128,0.16)", cornerradius=4),
-        width=0.62, hoverinfo="skip",
+        y=[h for h, k in zip(holds, known) if k],
+        x=[c for c, k in zip(caps, known) if k], orientation="h",
+        marker=dict(color="rgba(42,120,214,0.16)", cornerradius=4), width=0.62, hoverinfo="skip",
     ))
     fig.add_trace(go.Bar(  # actual load
         y=holds, x=weights, orientation="h", width=0.62,
-        marker=dict(color=[_util_color(f) for f in fracs], cornerradius=4),
-        customdata=[[c, f, v] for c, f, v in zip(caps, fracs, vols)],
-        hovertemplate="<b>%{y}</b><br>%{x:,.1f} / %{customdata[0]:,.1f} kg"
-                      "<br>%{customdata[1]:.0%} of limit<br>%{customdata[2]:.2f} m³<extra></extra>",
+        marker=dict(color=[_util_color(f) if f is not None else MUTED for f in fracs], cornerradius=4),
+        customdata=[[c, f, v, (f"{f:.0%} of {c:,.0f} kg limit" if k else "Limit unavailable")]
+                    for c, f, v, k in zip(caps, fracs, vols, known)],
+        hovertemplate="<b>%{y}</b><br>%{x:,.1f} kg · %{customdata[2]:.2f} m³"
+                      "<br>%{customdata[3]}<extra></extra>",
     ))
     for h, w, c, f, v in zip(holds, weights, caps, fracs, vols):
+        label = f"<b>{f:.0%}</b> · {w:,.0f}/{c:,.0f} kg · {v:.2f} m³" if f is not None else f"{w:,.0f} kg · limit unavailable"
         fig.add_annotation(x=max(w, c), y=h, xanchor="left", xshift=8, showarrow=False,
-                           text=f"<b>{f:.0%}</b> · {w:,.0f}/{c:,.0f} kg · {v:.2f} m³", font=dict(size=12))
+                           text=label, font=dict(size=12))
     _base_layout(fig, 90 + 56 * len(holds), barmode="overlay", margin=dict(l=8, r=210, t=4, b=8))
-    fig.update_xaxes(ticksuffix=" kg", rangemode="tozero")
+    fig.update_xaxes(visible=False, showgrid=False, zeroline=False, fixedrange=True)
     fig.update_yaxes(showgrid=False, autorange="reversed")
     return fig
 
@@ -326,9 +356,11 @@ def _render_overview(result, metrics):
             _plot(_cg_chart(metrics))
     with right:
         with st.container(border=True):
-            _section("Payload breakdown",
-                     f"Bags {_fmt(metrics['bag_weight_kg'])} kg · Cargo {_fmt(metrics['cargo_weight_kg'])} kg")
-            _plot(_payload_chart(metrics, result["passenger_mapping"]))
+            _section("Hold loading", "Weight use by hold · limit status shown where available")
+            if result.get("hold_assignments", {}).get("loads"):
+                _plot(_hold_chart(result))
+            else:
+                st.info("No hold assignments are available.")
 
 
 def _render_count_check(check):
@@ -365,13 +397,13 @@ def _render_tracker_count(check):
     if check.get("ok"):
         st.success(f"All {total} bags are accounted for and match the DCS checked-bag count.")
     else:
-        st.error(f"Tracker and DCS counts differ by {int(check.get('difference', total-dcs))} bag(s). Resolve the mismatch before release.")
+        st.error(f"Tracker and DCS counts differ by {abs(int(check.get('difference', total-dcs)))} bag(s). Resolve the mismatch before release.")
 
     entries = [
         ("Flying", flying, "Eligible for this flight", ACCENT),
-        ("Pulled", pulled, "Owner removed by DCS", "#eb6834"),
+        ("Pulled", pulled, "Owner removed by DCS", "#6d94b5"),
         ("Left behind", left, "At risk after cutoff", CRIT),
-        ("DCS checked", dcs, "Source manifest total", "#6f7785"),
+        ("DCS checked", dcs, "Source manifest total", "#6d94b5"),
     ]
     cards = "".join(
         f'<div class="tracker-card" style="border-top-color:{color}">'
@@ -381,8 +413,8 @@ def _render_tracker_count(check):
     )
     st.markdown(f'<div class="tracker-grid">{cards}</div>', unsafe_allow_html=True)
 
-    stacked = [("Flying", flying, ACCENT), ("Pulled", pulled, "#eb6834"),
-               ("Left behind", left, CRIT), ("Unknown", unknown, "#8a8f98")]
+    stacked = [("Flying", flying, ACCENT), ("Pulled", pulled, "#6d94b5"),
+               ("Left behind", left, CRIT), ("Unknown", unknown, "#9bb7cf")]
     pieces = "".join(
         f'<span title="{escape(label)}: {value}" style="width:{(value/total*100 if total else 0):.3f}%;background:{color}"></span>'
         for label, value, color in stacked if value
@@ -396,112 +428,9 @@ def _render_tracker_count(check):
     st.caption(f"Reconciliation: {flying} flying + {pulled} pulled + {left} left behind + {unknown} unknown = {total}; DCS checked {dcs}.")
 
 
-def _render_plan(result):
-    mapping = result["passenger_mapping"]
-    bags = result["bag_actions"]
-    loads = result["hold_assignments"].get("loads", {})
-
-    left, right = st.columns(2, gap="large")
-    with left:
-        with st.container(border=True):
-            _section("Passenger distribution",
-                     f"{mapping['passenger_count_mapped']} mapped / {mapping['seat_capacity']} seats · "
-                     f"{len(mapping['doesnt_fit'])} don't fit")
-            if mapping["zone_weights"]:
-                _plot(_zone_chart(mapping))
-            if mapping["doesnt_fit"]:
-                with st.expander(f"⚠️ {len(mapping['doesnt_fit'])} passengers don't fit", expanded=True):
-                    st.dataframe([{"Passenger": p.get("pax_id"), "Seat": p.get("seat"),
-                                   "Reason": p.get("doesnt_fit_reason")} for p in mapping["doesnt_fit"]],
-                                 hide_index=True, width="stretch")
-    with right:
-        with st.container(border=True):
-            _section("Hold loading", "Weight vs structural limit · green < 90% · amber ≥ 90% · red > 100%")
-            if loads:
-                _plot(_hold_chart(result))
-            else:
-                st.info("No assignments: the optimizer did not find a feasible plan.")
-
-    st.write("")
-    with st.container(border=True):
-        _section("Count checks")
-        _render_count_check(result["count_check"])
-
-    st.write("")
-    _section("Operational detail")
-    checks = result.get("checks", [])
-    actions = result.get("handling_actions") or {}
-    if actions:
-        st.caption(f"Handling actions: {actions.get('total', 0)} total · "
-                   f"{actions.get('moves', 0)} moves · {actions.get('offloads', 0)} offloads")
-    tabs = st.tabs([
-        f"🧳 Pull list ({len(bags['pull_list'])})",
-        f"⏱️ At risk ({len(bags['at_risk'])})",
-        f"🔁 Moves ({len(result['moves'])})",
-        f"📤 Offloads ({len(result.get('offloads', []))})",
-        f"📦 Cargo bumped ({len(result['cargo_bumped'])})",
-        "🗂️ Hold assignments",
-        f"🛡️ Safety Gate ({len(checks)})",
-        "🔢 Tracker count",
-    ])
-    with tabs[0]:
-        if bags["pull_list"]:
-            st.dataframe([{"Step": i, "Tag": b["tag"], "Owner": b.get("owner_pax_id", b.get("owner")),
-                           "Location": b.get("location"), "Stack": b.get("stack_pos"),
-                           "Action": b.get("pull_reason")} for i, b in enumerate(bags["pull_list"], 1)],
-                         hide_index=True, width="stretch",
-                         column_config={"Step": st.column_config.NumberColumn(width="small")})
-        else:
-            st.success("No bags to pull.")
-    with tabs[1]:
-        if bags["at_risk"]:
-            st.dataframe([{"Tag": b["tag"], "Owner": b.get("owner_pax_id", b.get("owner")),
-                           "Inbound flight": b.get("inbound_flight", ""), "ETA": b.get("eta"),
-                           "Action": b.get("pull_reason")} for b in bags["at_risk"]],
-                         hide_index=True, width="stretch")
-        else:
-            st.success("No connecting bags at risk.")
-    with tabs[2]:
-        if result["moves"]:
-            st.dataframe(result["moves"], hide_index=True, width="stretch")
-        else:
-            st.success("No moves required.")
-    with tabs[3]:
-        offloads = result.get("offloads", [])
-        if offloads:
-            st.dataframe(offloads, hide_index=True, width="stretch")
-        else:
-            st.success("No already-loaded items need to be offloaded.")
-    with tabs[4]:
-        if result["cargo_bumped"]:
-            st.dataframe(result["cargo_bumped"], hide_index=True, width="stretch")
-        else:
-            st.success("No cargo bumped.")
-    with tabs[5]:
-        if loads:
-            c1, c2 = st.columns(2)
-            with c1:
-                st.markdown("**Bags**")
-                st.dataframe([{"Bag": t, "Hold": h} for t, h in result["hold_assignments"]["bags"].items()],
-                             hide_index=True, width="stretch")
-            with c2:
-                st.markdown("**Cargo**")
-                st.dataframe([{"Cargo": t, "Hold": h} for t, h in result["hold_assignments"]["cargo"].items()],
-                             hide_index=True, width="stretch")
-        else:
-            st.info("No assignments: the optimizer did not find a feasible plan.")
-    with tabs[6]:
-        if checks:
-            st.dataframe(checks, hide_index=True, width="stretch")
-        else:
-            st.info("No Safety Gate checks reported.")
-    with tabs[7]:
-        _render_tracker_count(bags["tracker_count_check"])
-
-
 def _render_no_plan(result):
     """Avoid presenting candidate or pre-plan figures as a valid final plan."""
-    st.info("Final plan statistics are hidden for BLOCKED and UNSAFE results. Resolve the issue above, then re-plan.")
+    st.info("Plan statistics are hidden for blocked or unsafe results. Resolve the findings and re-plan.")
     if result["status"] == "UNSAFE":
         solver_reason = result.get("solver", {}).get("reason")
         if solver_reason:
@@ -510,34 +439,66 @@ def _render_no_plan(result):
                 st.write(solver_reason)
 
 
+def _style_checks(checks):
+    import pandas as pd
+
+    frame = pd.DataFrame(checks)
+    status_column = next((name for name in ("passed", "ok", "status") if name in frame.columns), None)
+    if status_column is None:
+        return frame
+
+    def color_row(row):
+        value = row[status_column]
+        passed = value is True or str(value).upper() in {"PASS", "PASSED", "TRUE", "SAFE"}
+        color = "#c9e1f4" if row.get("warning") else ("#e9f3fb" if passed else "#a9cce7")
+        return [f"background-color: {color}"] * len(row)
+
+    return frame.style.apply(color_row, axis=1)
+
+
 def _render_swap_stage(scenario, result):
     mapping = result["passenger_mapping"]
     passengers = scenario.get("passengers", [])
-    st.markdown("**Purpose:** map retained passengers onto replacement-aircraft cabin zones and calculate their seasonal weight.")
-    a, b, c = st.columns(3)
-    a.metric("Input passengers", len(passengers))
-    b.metric("Mapped", mapping["passenger_count_mapped"])
-    c.metric("Do not fit", len(mapping["doesnt_fit"]))
-    st.info("Logic: skip passengers removed by DCS → validate seat row/letter → assign row to a cabin zone → apply seasonal standard weights and the infant rule.")
+    fit_count = len(mapping["doesnt_fit"])
+    removed_count = sum(
+    str(p.get("removed_by_dcs", "")).lower() in {"true", "1", "yes"}
+    for p in passengers)
+    retained_count = len(passengers) - removed_count
+
+    st.info(
+        f"**When the aircraft changes, DCS sends the list of removed passengers.** "
+        f"{removed_count} of {len(passengers)} passengers are on that list and are skipped here. "
+        f"The other {retained_count} are checked against the new aircraft and mapped to cabin zones with seasonal weights."
+    )
+
+    _engine_cards([
+    ("Input passengers", len(passengers), "Source manifest", ACCENT),
+    ("Removed by DCS", removed_count, "Skipped before seat mapping", "#6f7785"),
+    ("Mapped", mapping["passenger_count_mapped"], "Assigned to cabin zones",  "#b586f2"),
+    ("Do not fit", fit_count, "Needs a DCS seat decision" if fit_count else "All retained passengers fit", CRIT if fit_count else GOOD),
+    ])
 
     left, right = st.columns([1, 1.4], gap="large")
     with left:
-        _section("Cabin-zone output", "Passenger count and calculated passenger load by zone")
-        rows = [{"Zone": zone, "Passengers": info["passenger_count"],
-                 "Weight (kg)": info["weight_kg"], "Arm (m)": info["arm_m"]}
-                for zone, info in mapping["zone_weights"].items()]
-        st.dataframe(rows, hide_index=True, width="stretch")
+        with st.container(border=True):
+            _section("Cabin-zone output")
+            rows = [{"Zone": zone, "Passengers": info["passenger_count"],
+                     "Weight (kg)": info["weight_kg"], "Arm (m)": info["arm_m"]}
+                    for zone, info in mapping["zone_weights"].items()]
+            st.dataframe(rows, hide_index=True, width="stretch")
     with right:
-        _section("Seat mapping decisions", "A few rows to make the mapping visible")
-        rows = [{"Passenger": p.get("pax_id"), "Seat": p.get("seat"), "Row": p.get("row"),
-                 "Zone": p.get("zone"), "Category": p.get("category")}
-                for p in mapping["mapped_passengers"][:12]]
-        st.dataframe(rows, hide_index=True, width="stretch")
+        with st.container(border=True):
+            _section("Seat mapping decisions")
+            rows = [{"Passenger": p.get("pax_id"), "Seat": p.get("seat"), "Row": p.get("row"),
+                     "Zone": p.get("zone"), "Category": p.get("category")}
+                    for p in mapping["mapped_passengers"]]
+            st.dataframe(rows, hide_index=True, width="stretch")
     if mapping["doesnt_fit"]:
-        st.warning("Passengers without a valid seat need a DCS decision.")
-        st.dataframe([{"Passenger": p.get("pax_id"), "Seat": p.get("seat"),
-                       "Reason": p.get("doesnt_fit_reason")} for p in mapping["doesnt_fit"]],
-                     hide_index=True, width="stretch")
+        with st.container(border=True):
+            st.warning("Passengers without a valid seat need a DCS decision.")
+            st.dataframe([{"Passenger": p.get("pax_id"), "Seat": p.get("seat"),
+                           "Reason": p.get("doesnt_fit_reason")} for p in mapping["doesnt_fit"]],
+                         hide_index=True, width="stretch")
     else:
         st.success("Every retained passenger maps to a valid cabin zone.")
 
@@ -546,24 +507,26 @@ def _render_bag_stage(result, scenario):
     bags = result["bag_actions"]
     check = bags["tracker_count_check"]
     counts = check.get("counts", {})
-    st.markdown("**Purpose:** decide which bags can fly, which must be pulled, and which will miss the loading cutoff.")
+    st.caption("Classifies bags to fly, pull, or leave behind at the loading cutoff.")
     st.caption(f"Cutoff: {scenario.get('flight', {}).get('loading_cutoff', '—')} · "
                f"DCS checked bags: {check.get('dcs_bags_checked', '—')}")
     _render_tracker_count(check)
-    st.info("Logic: bags for removed passengers go to the pull list (cart → hold → inbound; stack position first). Connecting bags arriving after cutoff are marked at risk and counted left behind.")
+    st.info("Removed-owner bags are pulled; inbound bags after cutoff are marked at risk.")
     left, right = st.columns(2, gap="large")
     with left:
-        _section("Ordered pull list", f"{len(bags['pull_list'])} bags to physically remove")
-        st.dataframe([{"Step": i, "Tag": b.get("tag"), "Owner": b.get("owner_pax_id", b.get("owner")),
-                       "Location": b.get("location"), "Stack": b.get("stack_pos"),
-                       "Why": b.get("pull_reason")} for i, b in enumerate(bags["pull_list"], 1)],
-                     hide_index=True, width="stretch")
+        with st.container(border=True):
+            _section("Ordered pull list", f"{len(bags['pull_list'])} bags to physically remove")
+            st.dataframe([{"Step": i, "Tag": b.get("tag"), "Owner": b.get("owner_pax_id", b.get("owner")),
+                           "Location": b.get("location"), "Stack": b.get("stack_pos"),
+                           "Why": b.get("pull_reason")} for i, b in enumerate(bags["pull_list"], 1)],
+                         hide_index=True, width="stretch")
     with right:
-        _section("At-risk bags", f"{len(bags['at_risk'])} bags arrive after cutoff")
-        st.dataframe([{"Tag": b.get("tag"), "Owner": b.get("owner_pax_id", b.get("owner")),
-                       "Inbound flight": b.get("inbound_flight", ""), "ETA": b.get("eta"),
-                       "Status": b.get("tracker_status"), "Why": b.get("pull_reason")}
-                      for b in bags["at_risk"]], hide_index=True, width="stretch")
+        with st.container(border=True):
+            _section("At-risk bags", f"{len(bags['at_risk'])} bags arrive after cutoff")
+            st.dataframe([{"Tag": b.get("tag"), "Owner": b.get("owner_pax_id", b.get("owner")),
+                           "Inbound flight": b.get("inbound_flight", ""), "ETA": b.get("eta"),
+                           "Status": b.get("tracker_status"), "Why": b.get("pull_reason")}
+                          for b in bags["at_risk"]], hide_index=True, width="stretch")
     with st.expander("Show every classified bag"):
         st.dataframe([{"Tag": b.get("tag"), "Owner": b.get("owner_pax_id", b.get("owner")),
                        "Location": b.get("location"), "Status": b.get("tracker_status"),
@@ -575,16 +538,22 @@ def _render_replanner_stage(result, settings):
     assignments = result["hold_assignments"]
     solver = result.get("solver", {})
     actions = result.get("handling_actions") or {}
-    st.markdown("**Purpose:** place eligible bags and cargo into holds while meeting aircraft limits and minimizing disruption.")
-    a, b, c = st.columns(3)
-    a.metric("Solver", solver.get("status", "—"))
-    b.metric("Moves", actions.get("moves", len(result.get("moves", []))))
-    c.metric("Offloads", actions.get("offloads", len(result.get("offloads", []))))
+    st.caption("Assigns bags and cargo to holds within aircraft limits.")
+    solver_status = solver.get("status", "—")
+    move_count = actions.get("moves", len(result.get("moves", [])))
+    offload_count = actions.get("offloads", len(result.get("offloads", [])))
+    _engine_cards([
+        ("Solver", solver_status, "Feasible plan found" if solver_status == "OPTIMAL" else "Review planner result",
+         GOOD if solver_status == "OPTIMAL" else CRIT),
+        ("Moves", move_count, "Handling changes" if move_count else "No moves required", WARN if move_count else GOOD),
+        ("Offloads", offload_count, "Already-loaded items" if offload_count else "No offloads required", WARN if offload_count else GOOD),
+        ("Cargo bumped", len(result.get("cargo_bumped", [])), "Priority items not loaded", WARN if result.get("cargo_bumped") else GOOD),
+    ])
     if settings["lightning_mode"]:
         order = "bags left behind → fewest moves → cargo retained → CG target"
     else:
         order = "bags left behind → cargo priority → fewest moves → CG target"
-    st.info(f"Logic: respect hold weight/volume, dangerous-goods, ZFW and CG limits. Objective order: {order}.")
+    st.info(f"Limits: hold weight/volume, dangerous goods, ZFW, and CG. Priority: {order}.")
     objectives = solver.get("objective_values", {})
     if objectives:
         metrics = result.get("metrics") or {}
@@ -599,58 +568,76 @@ def _render_replanner_stage(result, settings):
                 label = labels.get(name, name.replace("_", " ").title())
                 value_text = str(value)
             objective_rows.append({"Goal": label, "Result": value_text})
-        st.dataframe(objective_rows, hide_index=True, width="stretch")
+        with st.container(border=True):
+            _section("Planner priorities", "Results returned by the optimizer")
+            st.dataframe(objective_rows, hide_index=True, width="stretch")
     if solver.get("reason") and solver.get("status") != "OPTIMAL":
         st.error(solver["reason"])
     left, right = st.columns(2, gap="large")
     with left:
-        _section("Hold assignments")
-        rows = ([{"Type": "Bag", "Item": item, "Hold": hold}
-                 for item, hold in assignments.get("bags", {}).items()] +
-                [{"Type": "Cargo", "Item": item, "Hold": hold}
-                 for item, hold in assignments.get("cargo", {}).items()])
-        st.dataframe(rows, hide_index=True, width="stretch")
+        with st.container(border=True):
+            _section("Hold assignments")
+            rows = ([{"Type": "Bag", "Item": item, "Hold": hold}
+                     for item, hold in assignments.get("bags", {}).items()] +
+                    [{"Type": "Cargo", "Item": item, "Hold": hold}
+                     for item, hold in assignments.get("cargo", {}).items()])
+            st.dataframe(rows, hide_index=True, width="stretch")
     with right:
-        _section("Moves and offloads")
-        actions_rows = result.get("moves", []) + result.get("offloads", [])
-        if actions_rows:
-            st.dataframe(actions_rows, hide_index=True, width="stretch")
+        with st.container(border=True):
+            _section("Moves and offloads")
+            actions_rows = result.get("moves", []) + result.get("offloads", [])
+            if actions_rows:
+                st.dataframe(actions_rows, hide_index=True, width="stretch")
+            else:
+                st.success("No already-loaded items need to move or come off.")
+    with st.container(border=True):
+        _section("Cargo not loaded", "Each row explains the selected bump decision")
+        if result.get("cargo_bumped"):
+            st.dataframe(result["cargo_bumped"], hide_index=True, width="stretch")
         else:
-            st.success("No already-loaded items need to move or come off.")
-    _section("Cargo not loaded", "Each row explains the selected bump decision")
-    if result.get("cargo_bumped"):
-        st.dataframe(result["cargo_bumped"], hide_index=True, width="stretch")
-    else:
-        st.success("All cargo was assigned to a hold.")
+            st.success("All cargo was assigned to a hold.")
 
 
 def _render_safety_stage(result):
     gate = result.get("safety_gate", {})
     metrics = result.get("metrics") or gate.get("metrics")
-    st.markdown("**Purpose:** independently recalculate the final plan and decide whether it can proceed to a load controller.")
+    st.caption("Independently checks the final load and its release status.")
     status = result.get("status", gate.get("status", "—"))
-    a, b = st.columns(2)
-    a.metric("Final decision", status)
-    b.metric("Ready for load-controller review", "Yes" if gate.get("ready_for_load_controller") else "No")
+    decision_style = STATUS.get(status, STATUS_DEFAULT)
+    ready = bool(gate.get("ready_for_load_controller"))
+    _engine_cards([
+        ("Final decision", status, decision_style["label"], decision_style["color"]),
+        ("Load-controller review", "Ready" if ready else "Not ready",
+         "Qualified review required before dispatch" if ready else "Resolve the listed findings first",
+         GOOD if ready else CRIT),
+    ])
     if gate.get("status") == "NOT RUN":
         st.warning("The load planner found no feasible assignment, so the independent Safety Gate did not run.")
         return
-    st.info("Checks include passenger and bag counts, bag/cargo accounting, hold and cabin limits, dangerous goods, zero-fuel weight, and CG envelope.")
+    st.info("Checks counts, load accounting, aircraft limits, dangerous goods, and CG.")
     if metrics:
-        a, b, c = st.columns(3)
-        a.metric("Zero-fuel weight", f"{metrics['total_weight_kg']:,.1f} / {metrics['max_zfw_kg']:,.0f} kg")
-        b.metric("CG", f"{metrics['cg_m']:.3f} m")
-        c.metric("Weight margin", f"{metrics['zfw_margin_kg']:,.1f} kg")
+        margin = metrics["zfw_margin_kg"]
+        _engine_cards([
+            ("Zero-fuel weight", f"{metrics['total_weight_kg']:,.1f} kg",
+             f"Limit {metrics['max_zfw_kg']:,.0f} kg", ACCENT),
+            ("Centre of gravity", f"{metrics['cg_m']:.3f} m", "Final calculated position", "#4d91c6"),
+            ("Weight margin", f"{margin:,.1f} kg", "Below limit" if margin >= 0 else "Over limit",
+             GOOD if margin >= 0 else CRIT),
+        ])
     if gate.get("reasons"):
         _section("Decision reasons")
         for reason in gate["reasons"]:
             st.write(f"• {reason}")
     checks = result.get("checks", gate.get("checks", []))
     if checks:
-        _section("Individual gate checks", "Passed checks are green; failed checks identify what blocks or needs review")
-        st.dataframe(checks, hide_index=True, width="stretch")
-    _section("Count reconciliation")
-    _render_count_check(result.get("count_check", {}))
+        _section("Individual gate checks", "Blue shades distinguish passed, review, and failed checks")
+        checks = sorted(checks, key=lambda row: (bool(row.get("passed", row.get("ok", False))),
+                                                   bool(row.get("warning", False))))
+        with st.container(border=True):
+            st.dataframe(_style_checks(checks), hide_index=True, width="stretch")
+    with st.container(border=True):
+        _section("Count reconciliation")
+        _render_count_check(result.get("count_check", {}))
 
 
 def _load_demo_case(label):
@@ -684,8 +671,8 @@ def main():
             "Must-fly cargo · UNSAFE",
         ], index=0)
         st.divider()
-        season = st.segmented_control("Passenger season", ["summer", "winter"], default="summer",
-                                      format_func=lambda s: {"winter": "❄️ Winter", "summer": "☀️ Summer"}[s])
+        season = st.radio("Passenger season", ["summer", "winter"], index=0, horizontal=True,
+                          format_func=lambda s: {"winter": "❄️ Winter", "summer": "☀️ Summer"}[s])
         buffer_pct = st.segmented_control("Passenger weight buffer", [0, 5], default=0,
                                           format_func=lambda v: f"{v}%")
         lightning = st.toggle("⚡ Lightning mode")
@@ -693,7 +680,7 @@ def main():
         run = st.button("Re-plan", type="primary", width="stretch", icon="🔄")
         st.caption("Change a setting or demo case to rerun the pipeline.")
 
-    settings = {"season": season or "winter", "safety_buffer_pct": buffer_pct if buffer_pct is not None else 0,
+    settings = {"season": season, "safety_buffer_pct": buffer_pct if buffer_pct is not None else 0,
                 "lightning_mode": lightning}
     scenario_path, scenario, scenario_label, demo_note = _load_demo_case(selected)
     scenario_stamp = scenario_path.stat().st_mtime_ns
@@ -714,10 +701,12 @@ def main():
             st.session_state["result_key"] = cache_key
     result = st.session_state["result"]
 
-    _hero(scenario_label, settings)
+    settings["aircraft"] = result["aircraft"]
+    _hero(scenario_label, settings, scenario.get("flight", {}).get("loading_cutoff", "—"))
     if demo_note:
         st.caption(demo_note)
     _status_banner(result)
+    _action_strip(result)
     overview, engines = st.tabs(["🌐 Combined overview", "🧩 Engine walkthrough"])
 
     with overview:
@@ -725,12 +714,10 @@ def main():
         metrics = result.get("metrics")
         if result["status"] in {"BLOCKED", "UNSAFE"}:
             _render_no_plan(result)
-        if metrics:
+        elif metrics:
             _render_overview(result, metrics)
         else:
             st.info("Final weight and CG are unavailable because the optimizer found no feasible plan.")
-        st.write("")
-        _render_plan(result)
 
     with engines:
         stage = st.selectbox("Choose a pipeline stage", [
